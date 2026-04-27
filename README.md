@@ -23,7 +23,7 @@ https://drive.google.com/drive/folders/1ToaxsRSJbxXyKCuzHno5R9TGPkG9NlDK?usp=sha
 - Windows.
 - Python 3.10+.
 - Запущенный Nox/NoxPlayer.
-- Файл весов YOLO `best.pt` в корне проекта.
+- Файл весов YOLO `best.pt` в корне проекта (можно скачать по ссылке выше с Google Drive)
 - Для ускорения желательно использовать NVIDIA GPU с CUDA-совместимым PyTorch.
 
 ## Установка
