@@ -1,5 +1,10 @@
 # Nox YOLO Detector
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/22526dea-7aef-4f1b-b477-4fbb6e9e6ce6" width="600">
+</p>
+
+
 Проект для детекции объектов в окне эмулятора Nox с помощью Ultralytics YOLOv8. Скрипты захватывают окно Nox, запускают YOLO-модель `best.pt`, рисуют bounding boxes поверх найденных объектов и сохраняют результат в изображение или видео.
 
 Download weights:
