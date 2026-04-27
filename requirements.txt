@@ -1,0 +1,10 @@
+ultralytics>=8.0.0
+opencv-python
+flask
+numpy
+mss
+requests
+pyyaml
+Pillow
+torch>=1.13
+pywin32
