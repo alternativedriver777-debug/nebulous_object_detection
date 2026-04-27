@@ -7,6 +7,8 @@
 
 Проект для детекции объектов в окне эмулятора Nox с помощью Ultralytics YOLOv8. Скрипты захватывают окно Nox, запускают YOLO-модель `best.pt`, рисуют bounding boxes поверх найденных объектов и сохраняют результат в изображение или видео.
 
+Можно использовать для дальнейшего дообучения в своих целях.
+
 Download weights:
 
 https://drive.google.com/drive/folders/1ToaxsRSJbxXyKCuzHno5R9TGPkG9NlDK?usp=sharing
