@@ -1,9 +1,9 @@
 import argparse
 
-from ultralytics import YOLO
+from nebulous_detector.training import train
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=str, default="data.yaml", help="path to data yaml")
     parser.add_argument("--epochs", type=int, default=50)
@@ -11,7 +11,9 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, default="yolov8n.pt")
     args = parser.parse_args()
 
-    model = YOLO(args.model)
-    model.train(data=args.data, epochs=args.epochs, batch=args.batch)
+    train(data_path=args.data, epochs=args.epochs, batch=args.batch, model_name=args.model)
 
-    print("Обучение завершено. Веса сохранены в runs/detect")
+
+if __name__ == "__main__":
+    main()
+
