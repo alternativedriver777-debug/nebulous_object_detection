@@ -4,41 +4,41 @@
   <img src="https://github.com/user-attachments/assets/22526dea-7aef-4f1b-b477-4fbb6e9e6ce6" width="600">
 </p>
 
-Проект для детекции объектов в окне эмулятора Nox/NoxPlayer с помощью Ultralytics YOLOv8. Программа умеет делать скриншот с bounding boxes распознанных объектов и записывать короткое видео с детекцией в реальном времени. 
+A project for detecting objects in a Nox/NoxPlayer emulator window with Ultralytics YOLOv8. The program can save a screenshot with bounding boxes around detected objects and record a short video with real-time detection.
 
-Модель можно дообучать и расширять для своих целей.
+The model can be fine-tuned and extended for your own use cases.
 
-Веса модели можно скачать здесь:
+You can download the model weights here:
 
 https://drive.google.com/file/d/1a6VgKJIkP52Mtc_cmnrrTojxvobxQ0TT/view?usp=drivesdk
 
-## Структура проекта
+## Project Structure
 
-- `nebulous_detector/` - основной пакет с общей логикой.
-- `main.py` - совместимый entrypoint для разовой детекции.
-- `videomain.py` - совместимый entrypoint для записи видео с детекцией.
-- `train_yolo.py` - CLI для запуска обучения YOLO.
-- `requirements.txt` - зависимости проекта.
+- `nebulous_detector/` - the main package with shared logic.
+- `main.py` - compatible entry point for one-off detection.
+- `videomain.py` - compatible entry point for recording video with detection.
+- `train_yolo.py` - CLI for starting YOLO training.
+- `requirements.txt` - project dependencies.
 
-Внутри пакета:
+Inside the package:
 
-- `config.py` - пути, пороги, классы, цвета, FPS и длительность записи.
-- `window_capture.py` - поиск окна Nox и захват кадра.
-- `detection.py` - загрузка YOLO и извлечение результатов детекции.
-- `drawing.py` - отрисовка bounding boxes и подписей.
-- `image_app.py` - сценарий разовой детекции.
-- `video_app.py` - сценарий записи видео.
-- `training.py` - функция обучения модели.
+- `config.py` - paths, thresholds, classes, colors, FPS, and recording duration.
+- `window_capture.py` - Nox window lookup and frame capture.
+- `detection.py` - YOLO loading and detection result extraction.
+- `drawing.py` - rendering bounding boxes and labels.
+- `image_app.py` - one-off detection scenario.
+- `video_app.py` - video recording scenario.
+- `training.py` - model training function.
 
-## Требования
+## Requirements
 
 - Windows.
 - Python 3.10+.
-- Запущенный Nox.
-- Файл весов YOLO `best.pt` в корне проекта.
-- Для ускорения желательно использовать NVIDIA GPU с CUDA-совместимым PyTorch.
+- Running Nox instance.
+- YOLO weights file `best.pt` in the project root.
+- For better performance, an NVIDIA GPU with a CUDA-compatible PyTorch build is recommended.
 
-## Установка
+## Installation
 
 ```bash
 python -m venv .venv
@@ -46,49 +46,49 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-После установки положите файл модели `best.pt` в корень проекта.
+After installation, place the model file `best.pt` in the project root.
 
-## Быстрый запуск
+## Quick Start
 
-Разовая детекция:
+One-off detection:
 
 ```bash
 python main.py
 ```
 
-Также можно запустить модуль напрямую:
+You can also run the module directly:
 
 ```bash
 python -m nebulous_detector.image_app
 ```
 
-После запуска появится файл вида:
+After the run, a file like this will be created:
 
 ```text
 detection_output_20260427_153000.png
 ```
 
-Запись видео с детекцией:
+Recording video with detection:
 
 ```bash
 python videomain.py
 ```
 
-Также можно запустить модуль напрямую:
+You can also run the module directly:
 
 ```bash
 python -m nebulous_detector.video_app
 ```
 
-После запуска появится файл вида:
+After the run, a file like this will be created:
 
 ```text
 detection_video_20260427_153000.mp4
 ```
 
-## Настройка параметров
+## Configuration
 
-Основные параметры находятся в `nebulous_detector/config.py`:
+The main settings are in `nebulous_detector/config.py`:
 
 ```python
 WEIGHTS_PATH = "best.pt"
@@ -99,11 +99,11 @@ CLASS_NAMES = ["sphere", "plasma", "rainbow", "warning", "blob"]
 SEARCH_WINDOW_KEYWORDS = ["nox", "noxplayer"]
 ```
 
-Если окно Nox называется иначе, добавьте нужное слово в `SEARCH_WINDOW_KEYWORDS`.
+If your Nox window has a different title, add the required word to `SEARCH_WINDOW_KEYWORDS`.
 
-## Обучение модели
+## Model Training
 
-Создайте `data.yaml` в формате Ultralytics YOLO:
+Create `data.yaml` in the Ultralytics YOLO format:
 
 ```yaml
 train: path/to/train/images
@@ -112,19 +112,18 @@ nc: 5
 names: ["sphere", "plasma", "rainbow", "warning", "blob"]
 ```
 
-Запуск обучения:
+Start training:
 
 ```bash
 python train_yolo.py --data data.yaml --epochs 50 --batch 16 --model yolov8n.pt
 ```
 
-Результаты обучения будут сохранены в `runs/detect`.
+Training results will be saved to `runs/detect`.
 
-## Возможные проблемы
+## Troubleshooting
 
-Если окно Nox не найдено, убедитесь, что эмулятор запущен, а в заголовке окна есть `Nox` или `NoxPlayer`.
+If the Nox window is not found, make sure the emulator is running and the window title contains `Nox` or `NoxPlayer`.
 
-Если модель не загружается, проверьте, что `best.pt` лежит в корне проекта. При необходимости измените `WEIGHTS_PATH` в `nebulous_detector/config.py`.
+If the model does not load, check that `best.pt` is located in the project root. If needed, update `WEIGHTS_PATH` in `nebulous_detector/config.py`.
 
-Если видео записывается медленно, уменьшите `FPS`, уменьшите размер входа `imgsz` в `nebulous_detector/video_app.py` или используйте GPU.
-
+If video recording is slow, lower `FPS`, reduce the input `imgsz` in `nebulous_detector/video_app.py`, or use a GPU.
