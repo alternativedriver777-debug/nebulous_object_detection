@@ -3,5 +3,4 @@ def train(data_path, epochs, batch, model_name):
 
     model = YOLO(model_name)
     model.train(data=data_path, epochs=epochs, batch=batch)
-    print("Обучение завершено. Веса сохранены в runs/detect.")
-
+    print("Training completed. Weights were saved to runs/detect.")

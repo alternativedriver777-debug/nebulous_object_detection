@@ -10,7 +10,7 @@ from nebulous_detector.window_capture import find_window, grab_window_frame
 
 
 def main():
-    print("Ищем окно Nox...")
+    print("Searching for the Nox window...")
     try:
         hwnd, bbox = find_window()
     except ModuleNotFoundError as error:
@@ -18,10 +18,10 @@ def main():
         return
 
     if hwnd is None:
-        print("Окно Nox не найдено. Убедитесь, что Nox запущен и в заголовке есть 'Nox' или 'NoxPlayer'.")
+        print("Nox window was not found. Make sure Nox is running and the window title contains 'Nox' or 'NoxPlayer'.")
         return
 
-    print(f"Найдено окно HWND={hwnd}, bbox={bbox}")
+    print(f"Found window HWND={hwnd}, bbox={bbox}")
 
     try:
         frame = grab_window_frame(bbox)
@@ -29,21 +29,21 @@ def main():
         _print_missing_dependency(error)
         return
     except Exception as error:
-        print("Ошибка при создании скриншота окна:", error)
+        print("Error while creating the window screenshot:", error)
         return
 
     if not os.path.exists(WEIGHTS_PATH):
-        print(f"Файл весов {WEIGHTS_PATH} не найден в текущей папке.")
+        print(f"Weights file {WEIGHTS_PATH} was not found in the current folder.")
         return
 
-    print("Загружаем модель YOLOv8 из", WEIGHTS_PATH)
+    print("Loading YOLOv8 model from", WEIGHTS_PATH)
     model = load_yolo_model(WEIGHTS_PATH)
 
-    print("Выполняем детекцию...")
+    print("Running detection...")
     boxes, classes, confs = detect_objects(model, frame, conf_thresh=CONF_THRESH)
 
     if len(boxes) == 0:
-        print("Объекты не найдены. Сохраняем исходный скриншот без боксов.")
+        print("No objects found. Saving the original screenshot without boxes.")
         annotated = frame
     else:
         annotated = draw_boxes(frame, boxes, classes, confs)
@@ -52,12 +52,12 @@ def main():
     output_name = f"{OUTPUT_IMAGE_PREFIX}_{timestamp}.png"
 
     cv2.imwrite(output_name, annotated)
-    print(f"Сохранено: {output_name}")
-    print("Готово. Скрипт завершает работу.")
+    print(f"Saved: {output_name}")
+    print("Done. The script is exiting.")
 
 
 def _print_missing_dependency(error):
-    print(f"Не установлена зависимость: {error.name}. Выполните `pip install -r requirements.txt`.")
+    print(f"Missing dependency: {error.name}. Run `pip install -r requirements.txt`.")
 
 
 if __name__ == "__main__":

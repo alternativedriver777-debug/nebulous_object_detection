@@ -12,7 +12,7 @@ def main():
     if not _print_device_info():
         return
 
-    print("Ищем окно Nox...")
+    print("Searching for the Nox window...")
     try:
         hwnd, bbox = find_window()
     except ModuleNotFoundError as error:
@@ -20,16 +20,16 @@ def main():
         return
 
     if hwnd is None:
-        print("Окно Nox не найдено. Убедитесь, что эмулятор запущен и содержит 'nox' в заголовке.")
+        print("Nox window was not found. Make sure the emulator is running and the window title contains 'nox'.")
         return
 
-    print("Окно найдено:", bbox)
+    print("Window found:", bbox)
 
     if not os.path.exists(WEIGHTS_PATH):
-        print(f"Файл модели {WEIGHTS_PATH} не найден.")
+        print(f"Model file {WEIGHTS_PATH} was not found.")
         return
 
-    print("Загружаем модель YOLO...")
+    print("Loading YOLO model...")
     model = load_yolo_model(WEIGHTS_PATH)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,7 +53,7 @@ def main():
         _print_missing_dependency(error)
         return
 
-    print(f"Видео успешно сохранено: {output_video}")
+    print(f"Video saved successfully: {output_video}")
 
 
 def _print_device_info():
@@ -64,21 +64,21 @@ def _print_device_info():
         return False
 
     if torch.cuda.is_available():
-        print(f"GPU найден: {torch.cuda.get_device_name(0)}")
+        print(f"GPU found: {torch.cuda.get_device_name(0)}")
     else:
-        print("GPU не найден. Детекция будет выполняться на CPU и может быть медленной.")
+        print("GPU was not found. Detection will run on CPU and may be slow.")
 
     return True
 
 
 def _print_missing_dependency(error):
-    print(f"Не установлена зависимость: {error.name}. Выполните `pip install -r requirements.txt`.")
+    print(f"Missing dependency: {error.name}. Run `pip install -r requirements.txt`.")
 
 
 def _record_video(model, bbox, sct, video_writer, output_video):
-    print(f"Начало записи: {output_video}")
-    print(f"Длительность: {RECORD_SECONDS} сек при {FPS} FPS")
-    print("Нажмите Ctrl+C для досрочной остановки.")
+    print(f"Recording started: {output_video}")
+    print(f"Duration: {RECORD_SECONDS} sec at {FPS} FPS")
+    print("Press Ctrl+C to stop early.")
 
     start_time = time.time()
     next_frame_time = start_time
@@ -111,7 +111,7 @@ def _record_video(model, bbox, sct, video_writer, output_video):
             time.sleep(max(0, next_frame_time - current_time))
 
     except KeyboardInterrupt:
-        print("\nЗапись остановлена пользователем.")
+        print("\nRecording stopped by the user.")
 
 
 if __name__ == "__main__":
